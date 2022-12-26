@@ -1,0 +1,99 @@
+program -> decls compoundstmt
+decls -> decl ; decls | E
+decl -> int ID = INTNUM | real ID = REALNUM
+stmt -> ifstmt | assgstmt | compoundstmt
+compoundstmt -> { stmts }
+stmts -> stmt stmts | E
+ifstmt -> if ( boolexpr ) then stmt else stmt
+assgstmt -> ID = arithexpr ;
+boolexpr -> arithexpr boolop arithexpr
+boolop -> < | > | <= | >= | ==
+arithexpr -> multexpr arithexprprime
+arithexprprime -> + multexpr arithexprprime | - multexpr arithexprprime | E
+multexpr -> simpleexpr multexprprime
+multexprprime -> * simpleexpr multexprprime | / simpleexpr multexprprime | E
+simpleexpr -> ID | INTNUM | REALNUM | ( arithexpr )
+
+
+program 26 -> decls 27 compoundstmt 28
+decls 27  -> decl 29 ; 10 decls 27 | E 23
+decl 29 -> int 7 ID 20 = 9 INTNUM 21 | real 8 ID 20 = 9 REALNUM 22
+stmt 30 -> ifstmt 31 | assgstmt 32 | compoundstmt 28
+compoundstmt 28 -> { 0 stmts 33 } 1
+stmts 33 -> stmt 30 stmts 33 | E 23
+ifstmt 31 -> if 2 ( 3 boolexpr 34 ) 4 then 5 stmt 30 else 6 stmt 30
+assgstmt 32 -> ID 20 = 9 arithexpr 35 ; 10
+boolexpr 34 -> arithexpr 35 boolop 36 arithexpr 35
+boolop 36 -> < 11 | > 12 | <= 13 | >= 14 | == 15
+arithexpr 35 -> multexpr 37 arithexprprime 38
+arithexprprime 38 ->
+ + 16 multexpr 37 arithexprprime 38 | - 17 multexpr 37 arithexprprime 38 | E 23
+multexpr 37 -> simpleexpr 39 multexprprime 40
+multexprprime 40 ->
+* 18 simpleexpr 39 multexprprime 40 | / 19 simpleexpr 39 multexprprime 40 | E 23
+simpleexpr 39 -> ID 20 | INTNUM 21 | REALNUM 22 | ( 3 arithexpr 35 ) 4
+
+
+{ }
+if ( ) then else
+ID =
+> < >= <= ==
++ -
+* /
+ID INTNUM REALNUM
+int ID =
+real ID =
+;
+E 是'空'
+
+
+int a = 1 ; int b = 2 ; real c = 3.0 ;
+{
+a = a + 1 ;
+b = b * a ;
+if ( a < b ) then c = c / 2 ; else c = c / 4 ;
+}
+
+
+int a = 3 ; int b = 5.73 ; real c = 3.0 ;
+
+{
+
+a = a + 1 ;
+
+b = b + a ;
+
+if ( a < b ) then c = c / 0 ; else c = c / 4 ;
+
+}
+
+
+int a = 10 ; int b = 25 ; real c = 2.1 ;
+
+{
+
+a = a + 1 ;
+
+c = c * b ;
+
+b = b * a ;
+
+if ( a == b ) then c = c / 3 ; else c = c / 5 ;
+
+}
+
+int a = 16 ; int b = 21 ; real c = 3.0 ;
+
+{
+
+a = a - 1 ;
+
+b = b + a ;
+
+if ( a <= b ) then a = b / 2 ; else c = c / 4 ;
+
+a = a * 2 - 1 ;
+
+if ( a >= b ) then c = c / 2 ; else c = c / 4 ;
+
+}

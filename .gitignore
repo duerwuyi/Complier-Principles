@@ -10,3 +10,4 @@
 /.idea/
 /out/
 *.iml
+/.ipynb_checkpoints/generator-checkpoint.ipynb

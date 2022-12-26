@@ -1,0 +1,86 @@
+int main()
+{
+    printf("HelloWorld");
+    return 0;
+    }
+int main()
+
+{
+
+	int i = 0;// 注释 test
+
+	for (i = 0; i != 10; ++i)
+
+	{
+
+		printf("%d",i);
+
+	}
+
+	return 0;
+
+}
+{ }
+if ( ) then else
+while ( )
+ID =
+> < >= <= ==
++ -
+* /
+ID NUM
+
+program -> cs
+s -> ifs | whiles | as | cs
+cs -> { ss }
+ss -> s ss | E
+ifs -> if ( boole ) then s else s
+whiles -> while ( boole ) s
+as -> ID = ae ;
+boole -> ae boolop ae
+boolop -> < | > | <= | >= | ==
+ae -> me aep
+aep -> + me aep | - me aep | E
+me -> se mep
+mep -> * se mep | / se mep | E
+se -> ID | NUM | ( ae )
+
+{
+ID = NUM ;
+}
+
+
+
+{
+
+while ( ID == NUM )
+
+{
+
+ID = NUM
+
+}
+
+}
+
+
+
+
+{
+ ID = ID + NUM ;
+}
+
+
+
+
+
+
+
+{
+if ( ID == ID )
+then
+ID = NUM ;
+else
+ID = ID * NUM ;
+}
+
+

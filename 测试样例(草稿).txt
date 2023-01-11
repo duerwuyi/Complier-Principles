@@ -101,10 +101,321 @@ else
 ID = ID + NUM ;
 }
 
+LL:
+program
+	compoundstmt
+		{
+		stmts
+			stmt
+				ifstmt
+					if
+					(
+					boolexpr
+						arithexpr
+							multexpr
+								simpleexpr
+									ID
+								multexprprime
+									E
+							arithexprprime
+								E
+						boolop
+							==
+						arithexpr
+							multexpr
+								simpleexpr
+									ID
+								multexprprime
+									E
+							arithexprprime
+								E
+					)
+					then
+					stmt
+						assgstmt
+							ID
+							=
+							arithexpr
+								multexpr
+									simpleexpr
+										NUM
+									multexprprime
+										E
+								arithexprprime
+									E
+							;
+					else
+					stmt
+						ifstmt
+							if
+							(
+							boolexpr
+								arithexpr
+									multexpr
+										simpleexpr
+											ID
+										multexprprime
+											E
+									arithexprprime
+										E
+								boolop
+									==
+								arithexpr
+									multexpr
+										simpleexpr
+											ID
+										multexprprime
+											E
+									arithexprprime
+										E
+							)
+							then
+							stmt
+								assgstmt
+									ID
+									=
+									arithexpr
+										multexpr
+											simpleexpr
+												NUM
+											multexprprime
+												E
+										arithexprprime
+											E
+									;
+							else
+							stmt
+								ifstmt
+									if
+									(
+									boolexpr
+										arithexpr
+											multexpr
+												simpleexpr
+													ID
+												multexprprime
+													E
+											arithexprprime
+												E
+										boolop
+											==
+										arithexpr
+											multexpr
+												simpleexpr
+													ID
+												multexprprime
+													E
+											arithexprprime
+												E
+									)
+									then
+									stmt
+										assgstmt
+											ID
+											=
+											arithexpr
+												multexpr
+													simpleexpr
+														NUM
+													multexprprime
+														E
+												arithexprprime
+													E
+											;
+									else
+									stmt
+										assgstmt
+											ID
+											=
+											arithexpr
+												multexpr
+													simpleexpr
+														ID
+													multexprprime
+														E
+												arithexprprime
+													+
+													multexpr
+														simpleexpr
+															NUM
+														multexprprime
+															E
+													arithexprprime
+														E
+											;
+			stmts
+				E
+		}
+
+LR:
+program =>
+compoundstmt =>
+{ stmts } =>
+{ stmt stmts } =>
+{ stmt } =>
+{ ifstmt } =>
+{ if ( boolexpr ) then stmt else stmt } =>
+{ if ( boolexpr ) then stmt else ifstmt } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else stmt } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ifstmt } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else stmt } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else assgstmt } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = arithexpr ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr arithexprprime ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr + multexpr arithexprprime ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr + multexpr ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr + simpleexpr multexprprime ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr + simpleexpr ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = multexpr + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = simpleexpr multexprprime + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = simpleexpr + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then assgstmt else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = arithexpr ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = multexpr arithexprprime ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = multexpr ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = simpleexpr multexprprime ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = simpleexpr ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( boolexpr ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop arithexpr ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop multexpr arithexprprime ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop multexpr ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop simpleexpr multexprprime ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop simpleexpr ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr boolop ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( arithexpr == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( multexpr arithexprprime == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( multexpr == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( simpleexpr multexprprime == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( simpleexpr == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then stmt else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then assgstmt else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = arithexpr ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = multexpr arithexprprime ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = multexpr ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = simpleexpr multexprprime ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = simpleexpr ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( boolexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop arithexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop multexpr arithexprprime ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop multexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop simpleexpr multexprprime ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop simpleexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr boolop ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( arithexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( multexpr arithexprprime == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( multexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( simpleexpr multexprprime == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( simpleexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then stmt else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then assgstmt else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = arithexpr ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = multexpr arithexprprime ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = multexpr ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = simpleexpr multexprprime ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = simpleexpr ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( boolexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop arithexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop multexpr arithexprprime ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop multexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop simpleexpr multexprprime ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop simpleexpr ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr boolop ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( arithexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( multexpr arithexprprime == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( multexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( simpleexpr multexprprime == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( simpleexpr == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; } =>
+{ if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else if ( ID == ID ) then ID = NUM ; else ID = ID + NUM ; }
+
+
 {
 ID = ( ID * NUM ) + NUM - NUM / NUM ;
 }
 
+LL:
+program
+	compoundstmt
+		{
+		stmts
+			stmt
+				assgstmt
+					ID
+					=
+					arithexpr
+						multexpr
+							simpleexpr
+								(
+								arithexpr
+									multexpr
+										simpleexpr
+											ID
+										multexprprime
+											*
+											simpleexpr
+												NUM
+											multexprprime
+												E
+									arithexprprime
+										E
+								)
+							multexprprime
+								E
+						arithexprprime
+							+
+							multexpr
+								simpleexpr
+									NUM
+								multexprprime
+									E
+							arithexprprime
+								-
+								multexpr
+									simpleexpr
+										NUM
+									multexprprime
+										/
+										simpleexpr
+											NUM
+										multexprprime
+											E
+								arithexprprime
+									E
+					;
+			stmts
+				E
+		}
 
+
+LR:
+program =>
+compoundstmt =>
+{ stmts } =>
+{ stmt stmts } =>
+{ stmt } =>
+{ assgstmt } =>
+{ ID = arithexpr ; } =>
+{ ID = multexpr arithexprprime ; } =>
+{ ID = multexpr + multexpr arithexprprime ; } =>
+{ ID = multexpr + multexpr - multexpr arithexprprime ; } =>
+{ ID = multexpr + multexpr - multexpr ; } =>
+{ ID = multexpr + multexpr - simpleexpr multexprprime ; } =>
+{ ID = multexpr + multexpr - simpleexpr / simpleexpr multexprprime ; } =>
+{ ID = multexpr + multexpr - simpleexpr / simpleexpr ; } =>
+{ ID = multexpr + multexpr - simpleexpr / NUM ; } =>
+{ ID = multexpr + multexpr - NUM / NUM ; } =>
+{ ID = multexpr + simpleexpr multexprprime - NUM / NUM ; } =>
+{ ID = multexpr + simpleexpr - NUM / NUM ; } =>
+{ ID = multexpr + NUM - NUM / NUM ; } =>
+{ ID = simpleexpr multexprprime + NUM - NUM / NUM ; } =>
+{ ID = simpleexpr + NUM - NUM / NUM ; } =>
+{ ID = ( arithexpr ) + NUM - NUM / NUM ; } =>
+{ ID = ( multexpr arithexprprime ) + NUM - NUM / NUM ; } =>
+{ ID = ( multexpr ) + NUM - NUM / NUM ; } =>
+{ ID = ( simpleexpr multexprprime ) + NUM - NUM / NUM ; } =>
+{ ID = ( simpleexpr * simpleexpr multexprprime ) + NUM - NUM / NUM ; } =>
+{ ID = ( simpleexpr * simpleexpr ) + NUM - NUM / NUM ; } =>
+{ ID = ( simpleexpr * NUM ) + NUM - NUM / NUM ; } =>
+{ ID = ( ID * NUM ) + NUM - NUM / NUM ; }
 
 

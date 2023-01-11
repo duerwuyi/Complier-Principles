@@ -84,3 +84,27 @@ ID = ID * NUM ;
 }
 
 
+额外样例：三重if嵌套
+{
+if ( ID == ID )
+then
+ID = NUM ;
+else
+if ( ID == ID )
+then
+ID = NUM ;
+else
+if ( ID == ID )
+then
+ID = NUM ;
+else
+ID = ID + NUM ;
+}
+
+{
+ID = ( ID * NUM ) + NUM - NUM / NUM ;
+}
+
+
+
+
